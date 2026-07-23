@@ -24,19 +24,7 @@ Assim, `TODO` é encontrado, mas `todo` e `Todo` são ignorados.
 - [Node.js](https://nodejs.org/) instalado;
 - Visual Studio Code 1.85.0 ou superior.
 
-Na raiz do projeto, instale as dependências:
-
-```sh
-npm install
-```
-
-Depois, abra o projeto no Visual Studio Code:
-
-```sh
-code .
-```
-
-Com o projeto aberto:
+Não há dependências de execução para instalar. Com o projeto aberto:
 
 1. Pressione `F5` para iniciar a extensão.
 2. Na janela **Extension Development Host**, abra uma pasta que contenha
@@ -45,13 +33,35 @@ Com o projeto aberto:
 
 Não é necessário executar uma etapa de build.
 
+## Gerar o arquivo VSIX
+
+Na raiz do projeto, execute:
+
+```sh
+npx @vscode/vsce package
+```
+
+Se o empacotador avisar que o campo `repository` não está definido, confirme a
+continuação ou execute:
+
+```sh
+npx @vscode/vsce package --allow-missing-repository
+```
+
+O arquivo será criado na raiz do projeto usando o nome e a versão definidos no
+`package.json`. Por exemplo:
+
+```text
+todo-que-falta-0.2.0.vsix
+```
+
+Para instalar o pacote gerado:
+
+```sh
+code --install-extension todo-que-falta-0.2.0.vsix
+```
+
 ## Configurações
 
 - `todoQueFalta.exclude`: glob de arquivos e pastas ignorados.
 - `todoQueFalta.maxFileSize`: tamanho máximo de cada arquivo analisado.
-
-## Testes
-
-```sh
-npm test
-```
