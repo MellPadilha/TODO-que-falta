@@ -1,0 +1,89 @@
+{
+  "name": "todo-que-falta",
+  "displayName": "TODO que falta",
+  "description": "Encontre TODO, FIXME e DOCME em maiúsculas no workspace.",
+  "version": "0.2.0",
+  "publisher": "local",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "todo",
+    "fixme",
+    "docme",
+    "tasks"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onView:todoQueFalta.matches",
+    "onCommand:todoQueFalta.refresh"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check src/extension.js && node --check src/scanner.js && node --check src/tree.js && npm test"
+  },
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "todoQueFalta",
+          "title": "TODO que falta",
+          "icon": "resources/todo-que-falta.svg"
+        }
+      ]
+    },
+    "views": {
+      "todoQueFalta": [
+        {
+          "id": "todoQueFalta.matches",
+          "name": "Pendências",
+          "icon": "resources/todo-que-falta.svg",
+          "contextualTitle": "TODO que falta"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "todoQueFalta.matches",
+        "contents": "Nenhum TODO, FIXME ou DOCME em maiúsculas foi encontrado.\n[Atualizar busca](command:todoQueFalta.refresh)",
+        "when": "todoQueFalta.isEmpty"
+      }
+    ],
+    "commands": [
+      {
+        "command": "todoQueFalta.refresh",
+        "title": "Atualizar pendências",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "todoQueFalta.refresh",
+          "when": "view == todoQueFalta.matches",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "TODO que falta",
+      "properties": {
+        "todoQueFalta.exclude": {
+          "type": "string",
+          "default": "**/{.git,node_modules,out,dist,build,coverage,.next,.cache}/**",
+          "description": "Glob de arquivos e pastas ignorados pela busca."
+        },
+        "todoQueFalta.maxFileSize": {
+          "type": "number",
+          "default": 1048576,
+          "minimum": 1024,
+          "description": "Tamanho máximo, em bytes, de cada arquivo analisado."
+        }
+      }
+    }
+  }
+}
